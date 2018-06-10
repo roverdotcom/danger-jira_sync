@@ -31,7 +31,7 @@ module Danger
       end
     end
 
-    # Configures the Jira Client with your credentials
+    # Configures the Jira REST Client with your credentials
     #
     # @param jira_url [String]  The full url to your Jira instance, e.g.,
     #   "https://myjirainstance.atlassian.net"
@@ -40,7 +40,7 @@ module Danger
     # @param jira_api_key [String] The API key to use to access the Jira
     #   instance. Generate one here: https://id.atlassian.com/manage/api-tokens
     #
-    # @return [JIRA::Client] The underlying JIRA::Client instance
+    # @return [JIRA::Client] The underlying jira-ruby JIRA::Client instance
     #
     def configure(jira_url:, jira_username:, jira_api_key:)
       @jira_client = JIRA::Client.new(
@@ -61,12 +61,9 @@ module Danger
     # @return [Array<String>, nil] The list of project & component labels
     #   that were applied or nil if no issue or labels were found
     #
-    def autolabel_pull_request(issue_prefixes:)
+    def autolabel_pull_request(issue_prefixes)
       raise NotConfiguredError unless @jira_client
-
-      if issue_prefixes.empty?
-        raise(ArgumentError, "The argument 'issue_prefixes' must contain one or more prefixes")
-      end
+      raise(ArgumentError, "issue_prefixes cannot be empty") if issue_prefixes.empty?
 
       issue_keys = extract_issue_keys_from_pull_request(issue_prefixes)
       return if issue_keys.empty?
@@ -95,13 +92,14 @@ module Danger
     end
 
     def extract_issue_keys_from_pull_request(key_prefixes)
-      re = Regexp.new(/((#{key_prefixes.join("|")})-[0-9]+)/)
+      # Match all key_prefixes followed by a dash then numbers, e.g. "DEV-12345"
+      re = Regexp.new(/((#{key_prefixes.join("|")})-\d+)/)
 
       # Extract keys from the PR title and fallback to the body if none are found
       keys = []
-      github.pr_title.gsub(re) { |match| keys << match }
-      github.pr_body.gsub(re) { |match| keys << match } if keys.empty?
-      keys
+      github.pr_title.gsub(re) { |match| puts match; keys << match }
+      github.pr_body.gsub(re) { |match| puts match; keys << match } if keys.empty?
+      keys.compact.uniq
     end
 
     def fetch_labels_from_issues(issue_keys)
@@ -113,6 +111,7 @@ module Danger
           labels += issue.components.map(&:name)
         rescue JIRA::HTTPError => e
           warn "Error while retrieving JIRA ticket \"#{key}\": #{e.message}"
+          # No reason to continue if we are not authorized
           break if e.message == "Unauthorized"
         end
       end
@@ -121,7 +120,7 @@ module Danger
 
     def create_missing_github_labels(labels)
       missing_labels = labels - github_labels
-      missing_labels.each do |new_label|
+      missing_labels.each do |label|
         color = "##{SecureRandom.hex(3)}"
         github.api.add_label(repo, label, color)
       end

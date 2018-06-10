@@ -57,3 +57,5 @@ Labels the Pull Request with Jira Project Keys and Component Names
 3. Run `bundle exec rake spec` to run the tests
 4. Use `bundle exec guard` to automatically have tests run as you make changes
 5. Make your changes
+
+Note: In order to record new VCR cassettes, you must copy `.env.sample` to `.env` and supply it with a valid GitHub token. Please take care to manually remove this token from any VCR cassettes prior to committing

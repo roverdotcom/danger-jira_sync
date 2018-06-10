@@ -8,8 +8,20 @@ $:.unshift((ROOT + "spec").to_s)
 require "bundler/setup"
 require "pry"
 
+require "dotenv"
+Dotenv.load
+
+# Must be required and started before danger
+require "simplecov"
+SimpleCov.start do
+  add_filter "/spec/"
+end
+
 require "rspec"
 require "danger"
+require "webmock"
+require "webmock/rspec"
+require "vcr"
 
 if `git remote -v` == ""
   puts "You cannot run tests without setting a local git remote on this repo"
@@ -22,6 +34,11 @@ RSpec.configure do |config|
   config.filter_gems_from_backtrace "bundler"
   config.color = true
   config.tty = true
+end
+
+VCR.configure do |config|
+  config.cassette_library_dir = "#{File.dirname(__FILE__)}/fixtures/vcr_cassettes"
+  config.hook_into :webmock
 end
 
 require "danger_plugin"
@@ -56,7 +73,7 @@ def testing_env
     "TRAVIS_PULL_REQUEST" => "800",
     "TRAVIS_REPO_SLUG" => "artsy/eigen",
     "TRAVIS_COMMIT_RANGE" => "759adcbd0d8f...13c4dc8bb61d",
-    "DANGER_GITHUB_API_TOKEN" => "123sbdq54erfsd3422gdfio"
+    "DANGER_GITHUB_API_TOKEN" => ENV['GITHUB_API_KEY']
   }
 end
 

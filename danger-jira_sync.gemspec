@@ -23,11 +23,15 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "jira-ruby", "~> 1.5.0"
 
   # General ruby development
+  spec.add_development_dependency "dotenv"
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake", "~> 10.0"
 
   # Testing support
   spec.add_development_dependency "rspec", "~> 3.4"
+  spec.add_development_dependency "webmock"
+  spec.add_development_dependency "vcr"
+  spec.add_development_dependency "simplecov"
 
   # Linting code and docs
   spec.add_development_dependency "rubocop"
