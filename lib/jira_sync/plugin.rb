@@ -13,7 +13,7 @@ module Danger
   #         jira_sync.configure(
   #           jira_url: "https://myjirainstance.atlassian.net",
   #           jira_username: "test@example.com",
-  #           jira_api_key: "ABC123",
+  #           jira_api_token: "ABC123",
   #         )
   #
   # @example Automatically label Pull Requests with the associated Jira issue's
@@ -37,16 +37,16 @@ module Danger
     #   "https://myjirainstance.atlassian.net"
     # @param jira_username [String] The username to use for accessing the Jira
     #   instance. Commonly, this is an email address.
-    # @param jira_api_key [String] The API key to use to access the Jira
+    # @param jira_api_token [String] The API key to use to access the Jira
     #   instance. Generate one here: https://id.atlassian.com/manage/api-tokens
     #
     # @return [JIRA::Client] The underlying jira-ruby JIRA::Client instance
     #
-    def configure(jira_url:, jira_username:, jira_api_key:)
+    def configure(jira_url:, jira_username:, jira_api_token:)
       @jira_client = JIRA::Client.new(
         site: jira_url,
         username: jira_username,
-        password: jira_api_key,
+        password: jira_api_token,
         context_path: "",
         auth_type: :basic
       )
@@ -97,8 +97,8 @@ module Danger
 
       # Extract keys from the PR title and fallback to the body if none are found
       keys = []
-      github.pr_title.gsub(re) { |match| puts match; keys << match }
-      github.pr_body.gsub(re) { |match| puts match; keys << match } if keys.empty?
+      github.pr_title.gsub(re) { |match| keys << match }
+      github.pr_body.gsub(re) { |match| keys << match } if keys.empty?
       keys.compact.uniq
     end
 
@@ -106,13 +106,13 @@ module Danger
       labels = []
       issue_keys.each do |key|
         begin
-          issue = jira_client.Issue.find(key)
+          issue = @jira_client.Issue.find(key)
           labels << issue.project.key
           labels += issue.components.map(&:name)
         rescue JIRA::HTTPError => e
-          warn "Error while retrieving JIRA ticket \"#{key}\": #{e.message}"
-          # No reason to continue if we are not authorized
-          break if e.message == "Unauthorized"
+          warn "Error while retrieving JIRA issue \"#{key}\": #{e.message}"
+          # No reason to continue if Unauthorized
+          break if e.code == 503
         end
       end
       labels.compact.uniq

@@ -2,6 +2,52 @@
 
 require File.expand_path("spec_helper", __dir__)
 
+# In order to regenerate the fixtures in ./fixtures/vcr_cassettes,
+# you must ensure that your Jira Cloud development environment contains
+# projects matching all of the key prefixes in ISSUE_KEYS_IN_PR_TITLE and
+# ISSUE_KEYS_IN_PR_BODY. Similarly, there must be an issue in each project
+# with a matching key. Look at JIRA_ENVIRONMENT for hints on how  to
+# configure the development environment for VCR.
+#
+# On the GitHub side, if ./fixtures/vcr_cassettes/pull_request.yml changes, you
+# must ensure the title in the response contains the keys found in
+# ISSUE_KEYS_IN_PR_TITLE, and that the body contains the strings found in
+# ISSUE_KEYS_IN_PR_BODY. These constants reflect assumptions in the test suite.
+#
+ISSUE_KEYS_IN_PR_TITLE = ["DEV-1", "ABC-1"].freeze
+ISSUE_KEYS_IN_PR_BODY = ["XYZ-1"].freeze
+JIRA_ENVIRONMENT = {
+  projects: [
+    {
+      key: "DEV",
+      issues: [
+        {
+          key: "DEV-1",
+          components: %w(ComponentA ComponentB)
+        }
+      ]
+    },
+    {
+      key: "XYZ",
+      issues: [
+        {
+          key: "XYZ-1",
+          components: %w(ComponentC)
+        }
+      ]
+    },
+    {
+      key: "ABC",
+      issues: [
+        {
+          key: "ABC-1",
+          components: %w(ComponentB)
+        }
+      ]
+    }
+  ]
+}.freeze
+
 RSpec.describe Danger::DangerJiraSync do
   it "should be a plugin" do
     expect(described_class.new(nil)).to be_a Danger::Plugin
@@ -10,11 +56,11 @@ RSpec.describe Danger::DangerJiraSync do
   describe "with Dangerfile" do
     let(:dangerfile) { testing_dangerfile }
     let(:plugin) { dangerfile.jira_sync }
-    let(:jira_settings) do 
+    let(:jira_settings) do
       {
-        jira_url: 'http://example.atlassian.net/',
-        jira_username: 'some_user',
-        jira_api_key: 'some_api_key',
+        jira_url: testing_env["DANGER_JIRA_URL"],
+        jira_username: testing_env["DANGER_JIRA_USERNAME"],
+        jira_api_token: testing_env["DANGER_JIRA_API_TOKEN"]
       }
     end
 
@@ -45,44 +91,171 @@ RSpec.describe Danger::DangerJiraSync do
       end
 
       context "after calling #configure" do
-        before do 
+        class GitHubAPIMock
+        end
+
+        let(:github_api_mock) { GitHubAPIMock.new }
+
+        before do
           plugin.configure(jira_settings)
         end
 
+        def stub_github_api_labelling(labels: [])
+          allow(github_api_mock).to receive(:labels).and_return(labels)
+          allow(github_api_mock).to receive(:add_label).and_return(nil)
+          allow(github_api_mock).to receive(:add_labels_to_an_issue).and_return(nil)
+
+          allow(plugin.github).to receive(:api).and_return(github_api_mock)
+        end
+
+        def extract_project_keys(prefixes)
+          return prefixes.map { |key| key.gsub(/-\d+/, "") }
+        end
+
+        def pr_title_project_keys
+          extract_project_keys(ISSUE_KEYS_IN_PR_TITLE)
+        end
+
+        def pr_body_project_keys
+          extract_project_keys(ISSUE_KEYS_IN_PR_BODY)
+        end
+
+        def pr_title_related_component_names
+          component_names = []
+
+          JIRA_ENVIRONMENT[:projects].map do |project|
+            next unless pr_title_project_keys.include? project[:key]
+            component_names += project[:issues].map { |issue| issue[:components] }
+          end
+
+          component_names.flatten.uniq
+        end
+
+        def pr_title_related_project_keys
+          project_keys = []
+
+          JIRA_ENVIRONMENT[:projects].map do |project|
+            project_keys << project[:key] if pr_title_project_keys.include? project[:key]
+          end
+
+          project_keys.compact.uniq
+        end
+
+        def stub_jira_find_issue_response(code:, message:)
+          client = plugin.configure(jira_settings)
+
+          response_mock = Object.new
+          allow(response_mock).to receive(:code).and_return(code)
+          allow(response_mock).to receive(:message).and_return(message)
+
+          issue_mock = Object.new
+          allow(issue_mock).to receive(:find).and_raise(JIRA::HTTPError.new(response_mock))
+
+          allow(client).to receive(:Issue).and_return(issue_mock)
+        end
+
+        def stub_jira_find_issue_404
+          stub_jira_find_issue_response(code: 404, message: "Not found")
+        end
+
+        def stub_jira_find_issue_unauthorized
+          stub_jira_find_issue_response(code: 503, message: "Unauthorized")
+        end
+
         it "returns a list of labels that contains Jira component names" do
-          skip
+          stub_github_api_labelling
+
+          labels = []
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            labels = plugin.autolabel_pull_request(issue_prefixes)
+          end
+
+          expect(labels).to include(*pr_title_related_component_names)
         end
 
         it "returns a list of labels that contains Jira issue project keys" do
-          skip
+          stub_github_api_labelling
+
+          labels = []
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            labels = plugin.autolabel_pull_request(issue_prefixes)
+          end
+
+          expect(labels).to include(*pr_title_related_project_keys)
         end
 
-        it "creates a warrning when a related Jira ticket cannot be fetched" do
-          skip
+        it "creates a warning when a related Jira ticket cannot be fetched" do
+          stub_jira_find_issue_404
+
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            expect(plugin.autolabel_pull_request(issue_prefixes)).to be_nil
+          end
+
+          issue_warning_count = dangerfile.status_report[:warnings].count do |warning|
+            warning.start_with?("Error while retrieving JIRA issue")
+          end
+
+          expect(issue_warning_count).to eq(issue_prefixes.length)
+        end
+
+        it "creates only one warning when the Jira credentials are invalid" do
+          stub_jira_find_issue_unauthorized
+
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            expect(plugin.autolabel_pull_request(issue_prefixes)).to be_nil
+          end
+
+          issue_warning_count = dangerfile.status_report[:warnings].count do |warning|
+            warning.start_with?("Error while retrieving JIRA issue")
+          end
+
+          expect(issue_warning_count).to eq(1)
         end
 
         it "adds a label to the github issue for each related jira issue component name" do
-          skip
+          pr_title_related_component_names.each do |component_name|
+            expect(github_api_mock).to receive(:add_label).with(anything, component_name, anything).once.and_return(nil)
+          end
+          stub_github_api_labelling
+
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            plugin.autolabel_pull_request(issue_prefixes)
+          end
         end
 
         it "adds a label to the github issue for each related jira issue project key" do
-          skip
-        end
+          pr_title_related_project_keys.each do |project_key|
+            expect(github_api_mock).to receive(:add_label).with(anything, project_key, anything).once.and_return(nil)
+          end
+          stub_github_api_labelling
 
-        it "ignores duplicate issue keys" do
-          skip
-        end
-
-        it "ignores component and project key name overlap" do
-          skip
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            plugin.autolabel_pull_request(issue_prefixes)
+          end
         end
 
         it "adds missing github labels" do
-          skip
+          labels = pr_title_project_keys + pr_title_related_component_names
+          labels.each do |label|
+            expect(github_api_mock).to receive(:add_label).with(anything, label, anything)
+          end
+          stub_github_api_labelling
+
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            plugin.autolabel_pull_request(issue_prefixes)
+          end
         end
 
         it "does not attempt to add new github labels when they already exist" do
-          skip
+          existing_labels = %w(ComponentA)
+          existing_labels.each do |existing_label|
+            expect(github_api_mock).not_to receive(:add_label).with(anything, existing_label, anything)
+          end
+          stub_github_api_labelling(labels: existing_labels)
+
+          VCR.use_cassette(:default_success) do
+            plugin.autolabel_pull_request(issue_prefixes)
+          end
         end
 
         it "returns nil if no issue keys are found in the pr name or body" do
@@ -90,11 +263,23 @@ RSpec.describe Danger::DangerJiraSync do
         end
 
         it "falls back to issue keys in the pr body if none are found in the pr title" do
-          skip
+          stub_github_api_labelling
+
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            plugin.autolabel_pull_request(pr_body_project_keys)
+          end
         end
 
         it "ignores issue keys in the pr body if any are found in the pr title" do
-          skip
+          stub_github_api_labelling
+
+          labels = []
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            labels = plugin.autolabel_pull_request(pr_body_project_keys + pr_title_project_keys)
+          end
+
+          expect(labels).to include(*pr_title_project_keys)
+          expect(labels).not_to include(*pr_body_project_keys)
         end
 
         it "raises an ArgumentError if no issue_prefixes are specified" do
@@ -102,30 +287,13 @@ RSpec.describe Danger::DangerJiraSync do
         end
 
         it "returns nil if no labels can be fetched from Jira" do
-          skip
+          stub_jira_find_issue_404
+
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            expect(plugin.autolabel_pull_request(issue_prefixes)).to be_nil
+          end
         end
       end
     end
-
-    # Some examples for writing tests
-    # You should replace these with your own.
-
-    # it "Warns on a monday" do
-    #   monday_date = Date.parse("2016-07-11")
-    #   allow(Date).to receive(:today).and_return monday_date
-
-    #   @my_plugin.warn_on_mondays
-
-    #   expect(@dangerfile.status_report[:warnings]).to eq(["Trying to merge code on a Monday"])
-    # end
-
-    # it "Does nothing on a tuesday" do
-    #   monday_date = Date.parse("2016-07-12")
-    #   allow(Date).to receive(:today).and_return monday_date
-
-    #   @my_plugin.warn_on_mondays
-
-    #   expect(@dangerfile.status_report[:warnings]).to eq([])
-    # end
   end
 end
