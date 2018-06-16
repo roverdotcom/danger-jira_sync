@@ -7,11 +7,11 @@ with jira_sync
 
 Add `danger-jira_sync` to your Gemfile
 
-    gem "danger-jira_sync", git: "https://github.com/roverdotcom/danger-jira_sync"
+    gem "danger-jira_sync"
 
 Or, without bundler
 
-    $ gem install danger-jira_sync -s https://github.com/roverdotcom/danger-jira_sync
+    $ gem install danger-jira_sync
 
 ## Usage
 
