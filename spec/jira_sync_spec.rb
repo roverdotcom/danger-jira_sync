@@ -79,6 +79,39 @@ RSpec.describe Danger::DangerJiraSync do
         value = plugin.configure(jira_settings)
         expect(value).to be_a(JIRA::Client)
       end
+
+      it "should render a warning when the jira_url is blank" do
+        jira_settings[:jira_url] = ""
+
+        plugin.configure(jira_settings)
+
+        has_jira_url_warning = dangerfile.status_report[:warnings].any? do |warning|
+          warning == "danger-jira_sync plugin configuration is missing jira_url"
+        end
+        expect(has_jira_url_warning).to be(true)
+      end
+
+      it "should render a warning when the jira_username is blank" do
+        jira_settings[:jira_username] = ""
+
+        plugin.configure(jira_settings)
+
+        has_jira_url_warning = dangerfile.status_report[:warnings].any? do |warning|
+          warning == "danger-jira_sync plugin configuration is missing jira_username"
+        end
+        expect(has_jira_url_warning).to be(true)
+      end
+
+      it "should render a warning when the jira_api_token is blank" do
+        jira_settings[:jira_api_token] = ""
+
+        plugin.configure(jira_settings)
+
+        has_jira_url_warning = dangerfile.status_report[:warnings].any? do |warning|
+          warning == "danger-jira_sync plugin configuration is missing jira_api_token"
+        end
+        expect(has_jira_url_warning).to be(true)
+      end
     end
 
     describe "autolabel_pull_request" do
@@ -192,7 +225,7 @@ RSpec.describe Danger::DangerJiraSync do
           end
 
           issue_warning_count = dangerfile.status_report[:warnings].count do |warning|
-            warning.start_with?("Error while retrieving JIRA issue")
+            warning.start_with?("404 Error while retrieving JIRA issue")
           end
 
           expect(issue_warning_count).to eq(issue_prefixes.length)
@@ -206,7 +239,7 @@ RSpec.describe Danger::DangerJiraSync do
           end
 
           issue_warning_count = dangerfile.status_report[:warnings].count do |warning|
-            warning.start_with?("Error while retrieving JIRA issue")
+            warning.start_with?("503 Error while retrieving JIRA issue")
           end
 
           expect(issue_warning_count).to eq(1)

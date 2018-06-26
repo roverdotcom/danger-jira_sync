@@ -43,6 +43,10 @@ module Danger
     # @return [JIRA::Client] The underlying jira-ruby JIRA::Client instance
     #
     def configure(jira_url:, jira_username:, jira_api_token:)
+      warn "danger-jira_sync plugin configuration is missing jira_url" if jira_url.blank?
+      warn "danger-jira_sync plugin configuration is missing jira_username" if jira_username.blank?
+      warn "danger-jira_sync plugin configuration is missing jira_api_token" if jira_api_token.blank?
+
       @jira_client = JIRA::Client.new(
         site: jira_url,
         username: jira_username,
@@ -110,7 +114,7 @@ module Danger
           labels << issue.project.key
           labels += issue.components.map(&:name)
         rescue JIRA::HTTPError => e
-          warn "Error while retrieving JIRA issue \"#{key}\": #{e.message}"
+          warn "#{e.code} Error while retrieving JIRA issue \"#{key}\": #{e.message}"
           # No reason to continue if Unauthorized
           break if e.code == 503
         end
