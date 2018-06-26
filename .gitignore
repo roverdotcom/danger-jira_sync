@@ -4,3 +4,5 @@ pkg
 .yardoc
 coverage/
 .env
+.bundle/
+bundle/

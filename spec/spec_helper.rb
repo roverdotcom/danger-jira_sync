@@ -39,6 +39,10 @@ end
 VCR.configure do |config|
   config.cassette_library_dir = "#{File.dirname(__FILE__)}/fixtures/vcr_cassettes"
   config.hook_into :webmock
+  config.filter_sensitive_data('<GITHUB_TOKEN>') { ENV['DANGER_GITHUB_API_TOKEN'] }
+  config.filter_sensitive_data('<JIRA_URL>') { ENV['DANGER_JIRA_URL'] }
+  config.filter_sensitive_data('<JIRA_USER>') { ENV['DANGER_JIRA_USERNAME'] }
+  config.filter_sensitive_data('<JIRA_PASS>') { ENV['DANGER_JIRA_API_TOKEN'] }
 end
 
 require "danger_plugin"
