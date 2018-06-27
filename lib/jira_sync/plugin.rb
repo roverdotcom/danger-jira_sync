@@ -125,7 +125,7 @@ module Danger
     def create_missing_github_labels(labels)
       missing_labels = labels - github_labels
       missing_labels.each do |label|
-        color = "##{SecureRandom.hex(3)}"
+        color = SecureRandom.hex(3)
         github.api.add_label(repo, label, color)
       end
       missing_labels
