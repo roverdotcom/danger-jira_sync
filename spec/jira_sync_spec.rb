@@ -130,8 +130,21 @@ RSpec.describe Danger::DangerJiraSync do
           plugin.configure(jira_settings)
         end
 
+        def github_labels_response(labels)
+          labels.map do |label|
+            {
+              id: SecureRandom.random_number(100_000),
+              node_id: SecureRandom.base64,
+              url: "https://api.github.com/repos/<someorg>/<somerepo>/labels/#{label}",
+              name: label,
+              color: SecureRandom.hex(3),
+              default: false
+            }
+          end
+        end
+
         def stub_github_api_labelling(labels: [])
-          allow(github_api_mock).to receive(:labels).and_return(labels)
+          allow(github_api_mock).to receive(:labels).and_return(github_labels_response(labels))
           allow(github_api_mock).to receive(:add_label).and_return(nil)
           allow(github_api_mock).to receive(:add_labels_to_an_issue).and_return(nil)
 
@@ -278,7 +291,7 @@ RSpec.describe Danger::DangerJiraSync do
           expect(dangerfile.status_report[:warnings].count).to eq(expected_missing_label_count)
         end
 
-        it "creates a warning when it cannot fetch existing github labels" do
+        it "creates a warning when it cannot add a label to an existing github issue" do
           stub_github_api_labelling
 
           error = Octokit::Error.from_response({
@@ -299,7 +312,7 @@ RSpec.describe Danger::DangerJiraSync do
           expect(dangerfile.status_report[:warnings].count).to eq(1)
         end
 
-        it "creates a warning when it cannot add a label to an existing github issue" do
+        it "creates a warning when it cannot fetch existing github labels" do
           stub_github_api_labelling
 
           error = Octokit::Error.from_response({
@@ -314,7 +327,7 @@ RSpec.describe Danger::DangerJiraSync do
             HEREDOC
           })
 
-          expect(github_api_mock).to receive(:add_label).and_raise(error)
+          expect(github_api_mock).to receive(:labels).and_raise(error)
           expect(dangerfile.status_report[:warnings].count).to eq(0), "preconditions"
 
           VCR.use_cassette(:default_success, record: :new_episodes) do

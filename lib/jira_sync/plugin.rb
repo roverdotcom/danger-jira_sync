@@ -92,7 +92,7 @@ module Danger
     end
 
     def github_labels
-      @github_labels ||= github.api.labels(repo)
+      @github_labels ||= github.api.labels(repo).map { |github_label| github_label[:name] }
     rescue Octokit::Error => e
       warn "#{e.response_status} Error while retrieving GitHub labels: #{e.message}"
     end
