@@ -124,10 +124,7 @@ RSpec.describe Danger::DangerJiraSync do
       end
 
       context "after calling #configure" do
-        class GitHubAPIMock
-        end
-
-        let(:github_api_mock) { GitHubAPIMock.new }
+        let(:github_api_mock) { Object.new }
 
         before do
           plugin.configure(jira_settings)
@@ -217,6 +214,16 @@ RSpec.describe Danger::DangerJiraSync do
           expect(labels).to include(*pr_title_related_project_keys)
         end
 
+        it "creates no warnings in the default case" do
+          stub_github_api_labelling
+
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            plugin.autolabel_pull_request(issue_prefixes)
+          end
+
+          expect(dangerfile.status_report[:warnings].count).to eq(0)
+        end
+
         it "creates a warning when a related Jira ticket cannot be fetched" do
           stub_jira_find_issue_404
 
@@ -243,6 +250,78 @@ RSpec.describe Danger::DangerJiraSync do
           end
 
           expect(issue_warning_count).to eq(1)
+        end
+
+        it "creates a warning when it cannot create a github label" do
+          stub_github_api_labelling
+
+          error = Octokit::Error.from_response({
+            method: "POST",
+            url: "https://www.example.com/",
+            status: 422,
+            documentation_url: "https://developer.github.com/v3/issues/labels/#create-a-label",
+            message: <<~HEREDOC
+              resource: Label
+              code: already_exists
+              field: name
+            HEREDOC
+          })
+
+          expect(github_api_mock).to receive(:add_label).and_raise(error)
+          expect(dangerfile.status_report[:warnings].count).to eq(0), "preconditions"
+
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            plugin.autolabel_pull_request(issue_prefixes)
+          end
+
+          expected_missing_label_count = 1
+          expect(dangerfile.status_report[:warnings].count).to eq(expected_missing_label_count)
+        end
+
+        it "creates a warning when it cannot fetch existing github labels" do
+          stub_github_api_labelling
+
+          error = Octokit::Error.from_response({
+            method: "GET",
+            url: "https://www.example.com/",
+            status: 503,
+            documentation_url: "https://developer.github.com/v3/issues/labels/#create-a-label",
+            message: "Forbidden"
+          })
+
+          expect(github_api_mock).to receive(:add_labels_to_an_issue).and_raise(error)
+          expect(dangerfile.status_report[:warnings].count).to eq(0), "preconditions"
+
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            plugin.autolabel_pull_request(issue_prefixes)
+          end
+
+          expect(dangerfile.status_report[:warnings].count).to eq(1)
+        end
+
+        it "creates a warning when it cannot add a label to an existing github issue" do
+          stub_github_api_labelling
+
+          error = Octokit::Error.from_response({
+            method: "POST",
+            url: "https://www.example.com/",
+            status: 422,
+            documentation_url: "https://developer.github.com/v3/issues/labels/#create-a-label",
+            message: <<~HEREDOC
+              resource: Label
+              code: already_exists
+              field: name
+            HEREDOC
+          })
+
+          expect(github_api_mock).to receive(:add_label).and_raise(error)
+          expect(dangerfile.status_report[:warnings].count).to eq(0), "preconditions"
+
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            plugin.autolabel_pull_request(issue_prefixes)
+          end
+
+          expect(dangerfile.status_report[:warnings].count).to eq(1)
         end
 
         it "adds a label to the github issue for each related jira issue component name" do

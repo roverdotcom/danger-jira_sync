@@ -76,7 +76,7 @@ module Danger
       return if labels.empty?
 
       create_missing_github_labels(labels)
-      github.api.add_labels_to_an_issue(repo, issue_number, labels)
+      add_labels_to_issue(labels)
 
       labels
     end
@@ -93,6 +93,8 @@ module Danger
 
     def github_labels
       @github_labels ||= github.api.labels(repo)
+    rescue Octokit::Error => e
+      warn "#{e.response_status} Error while retrieving GitHub labels: #{e.message}"
     end
 
     def extract_issue_keys_from_pull_request(key_prefixes)
@@ -126,9 +128,19 @@ module Danger
       missing_labels = labels - github_labels
       missing_labels.each do |label|
         color = SecureRandom.hex(3)
-        github.api.add_label(repo, label, color)
+        begin
+          github.api.add_label(repo, label, color)
+        rescue Octokit::Error => e
+          warn "#{e.response_status} Error while creating GitHub label \"#{label}\" with color \"#{color}\": #{e.message}"
+        end
       end
       missing_labels
+    end
+
+    def add_labels_to_issue(labels)
+      github.api.add_labels_to_an_issue(repo, issue_number, labels)
+    rescue Octokit::Error => e
+      warn "#{e.response_status} Error while adding labels [#{labels}] to GitHub issue: #{e.message}"
     end
   end
 end
