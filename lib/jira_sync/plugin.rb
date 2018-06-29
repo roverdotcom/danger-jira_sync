@@ -138,10 +138,9 @@ module Danger
     end
 
     def add_labels_to_issue(labels)
-      existing_labels = github.api.labels_for_issue(repo, issue_number)
+      existing_labels = github.api.labels_for_issue(repo, issue_number).map { |label| label[:name] }
       new_labels = labels - existing_labels
-      return if new_labels.empty?
-      github.api.add_labels_to_an_issue(repo, issue_number, new_labels)
+      github.api.add_labels_to_an_issue(repo, issue_number, new_labels) unless new_labels.empty?
     rescue Octokit::Error => e
       warn "#{e.response_status} Error while adding labels [#{labels}] to GitHub issue: #{e.message}"
     end
