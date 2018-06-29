@@ -146,6 +146,7 @@ RSpec.describe Danger::DangerJiraSync do
         def stub_github_api_labelling(labels: [])
           allow(github_api_mock).to receive(:labels).and_return(github_labels_response(labels))
           allow(github_api_mock).to receive(:add_label).and_return(nil)
+          allow(github_api_mock).to receive(:labels_for_issue).and_return([])
           allow(github_api_mock).to receive(:add_labels_to_an_issue).and_return(nil)
 
           allow(plugin.github).to receive(:api).and_return(github_api_mock)
@@ -312,6 +313,27 @@ RSpec.describe Danger::DangerJiraSync do
           expect(dangerfile.status_report[:warnings].count).to eq(1)
         end
 
+        it "creates a warning when it cannot fetch labels for the related pr" do
+          stub_github_api_labelling
+
+          error = Octokit::Error.from_response({
+            method: "GET",
+            url: "https://www.example.com/",
+            status: 503,
+            documentation_url: "https://developer.github.com/v3/issues/labels/#create-a-label",
+            message: "Forbidden"
+          })
+
+          expect(github_api_mock).to receive(:labels_for_issue).and_raise(error)
+          expect(dangerfile.status_report[:warnings].count).to eq(0), "preconditions"
+
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            plugin.autolabel_pull_request(issue_prefixes)
+          end
+
+          expect(dangerfile.status_report[:warnings].count).to eq(1)
+        end
+
         it "creates a warning when it cannot fetch existing github labels" do
           stub_github_api_labelling
 
@@ -352,6 +374,17 @@ RSpec.describe Danger::DangerJiraSync do
           pr_title_related_project_keys.each do |project_key|
             expect(github_api_mock).to receive(:add_label).with(anything, project_key, anything).once.and_return(nil)
           end
+          stub_github_api_labelling
+
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            plugin.autolabel_pull_request(issue_prefixes)
+          end
+        end
+
+        it "does not add existing labels to the github pr" do
+          expect(github_api_mock).to receive(:labels_for_issue).once.and_return github_labels_response(%w(DEV))
+          expect(github_api_mock).to receive(:add_labels_to_an_issue).with(anything, anything, %w(ComponentA ComponentC ABC ComponentB)).once
+
           stub_github_api_labelling
 
           VCR.use_cassette(:default_success, record: :new_episodes) do

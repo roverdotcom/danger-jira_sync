@@ -62,6 +62,6 @@ Labels the Pull Request with Jira Project Keys and Component Names
 
 # **:warning: Do not commit fixtures with your credentials in them :warning:**
 
-Before committing, check to see if you have created or changed any fixtures in `/spec/fixtures/vcr_cassettes`. If you have, it is likely that the changed file contains your credentials. Manually remove your credentials from these fixture files
+Before committing, check to see if you have created or changed any fixtures in `/spec/fixtures/vcr_cassettes`. If you have, it is possible that the changed file contains your credentials. Manually remove your credentials from these fixture files
 
 When a new HTTP request is made that [VCR](https://github.com/vcr/vcr) hasn't seen before, it will record the response from the server and play it back in subsequent HTTP requests to the same URL with the same headers. This means that if a new request is made in the tests, it will actually make a request to the server in order to record the response. For this reason, development should be done within testing environments in GitHub and Jira Cloud
