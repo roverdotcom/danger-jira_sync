@@ -65,14 +65,19 @@ module Danger
     # @return [Array<String>, nil] The list of project & component labels
     #   that were applied or nil if no issue or labels were found
     #
-    def autolabel_pull_request(issue_prefixes)
+    def autolabel_pull_request(issue_prefixes, project: true, components: true, labels: false)
       raise NotConfiguredError unless @jira_client
       raise(ArgumentError, "issue_prefixes cannot be empty") if issue_prefixes.empty?
 
       issue_keys = extract_issue_keys_from_pull_request(issue_prefixes)
       return if issue_keys.empty?
 
-      labels = fetch_labels_from_issues(issue_keys)
+      labels = fetch_labels_from_issues(
+        issue_keys,
+        project: project,
+        components: components,
+        labels: labels
+      )
       return if labels.empty?
 
       create_missing_github_labels(labels)
@@ -108,13 +113,14 @@ module Danger
       keys.compact.uniq
     end
 
-    def fetch_labels_from_issues(issue_keys)
+    def fetch_labels_from_issues(issue_keys, project: true, components: true, labels: false)
       labels = []
       issue_keys.each do |key|
         begin
           issue = @jira_client.Issue.find(key)
-          labels << issue.project.key
-          labels += issue.components.map(&:name)
+          labels << issue.project.key if project
+          labels += issue.components.map(&:name) if components
+          labels += issue.fields["labels"] if labels
         rescue JIRA::HTTPError => e
           warn "#{e.code} Error while retrieving JIRA issue \"#{key}\": #{e.message}"
           # No reason to continue if Unauthorized
