@@ -29,19 +29,22 @@ Automatically label Pull Requests with the associated Jira issue's component nam
 
 ## Methods
 
-### `configure(jira_url:, jira_username:, jira_api_token:)` 
+### `configure(jira_url:, jira_username:, jira_api_token:)`
 Configures the Jira Client with your credentials
 
 **Params**
-  - `jira_url [String]` - The full url to your Jira instance, e.g., "https://myjirainstance.atlassian.net" 
+  - `jira_url [String]` - The full url to your Jira instance, e.g., "https://myjirainstance.atlassian.net"
   - `jira_username [String]` - The username to use for accessing the Jira instance. Commonly, this is an email address
   - `jira_api_token [String]` - The API key to use to access the Jira instance. Generate one here: https://id.atlassian.com/manage/api-tokens
 
 **Returns**
  - `[JIRA::Client]` - The underlying `JIRA::Client` instance
 
-### `autolabel_pull_request(issue_prefixes)` 
+### `autolabel_pull_request(issue_prefixes)`
 Labels the Pull Request with Jira Project Keys and Component Names
+
+### `autolabel_pull_request(issue_prefixes, project: true, components: true, labels: true)`
+Labels the Pull Request with Jira Project Keys and Component Names and Labels
 
 **Params**
   - `issue_prefixes [Array<String>]` - An array of issue key prefixes; this is often the project key. These must be present in the title or body of the Pull Request
