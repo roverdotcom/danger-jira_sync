@@ -114,20 +114,20 @@ module Danger
     end
 
     def fetch_labels_from_issues(issue_keys, project: true, components: true, labels: false)
-      labels = []
+      issue_labels = []
       issue_keys.each do |key|
         begin
           issue = @jira_client.Issue.find(key)
-          labels << issue.project.key if project
-          labels += issue.components.map(&:name) if components
-          labels += issue.fields["labels"] if labels
+          issue_labels << issue.project.key if project
+          issue_labels += issue.components.map(&:name) if components
+          issue_labels += issue.fields["labels"] if labels
         rescue JIRA::HTTPError => e
           warn "#{e.code} Error while retrieving JIRA issue \"#{key}\": #{e.message}"
           # No reason to continue if Unauthorized
           break if e.code == 503
         end
       end
-      labels.compact.uniq
+      issue_labels.compact.uniq
     end
 
     def create_missing_github_labels(labels)
