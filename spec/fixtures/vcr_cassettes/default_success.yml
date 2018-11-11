@@ -16,10 +16,10 @@ http_interactions:
   response:
     status:
       code: 200
-      message: OK
+      message: ''
     headers:
       Server:
-      - Atlassian Proxy/0.1.266
+      - Atlassian Proxy/1.13.6.2
       Vary:
       - Accept-Encoding
       Cache-Control:
@@ -29,13 +29,17 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=315360000; includeSubDomains; preload
       Date:
-      - Tue, 26 Jun 2018 03:06:43 GMT
+      - Sun, 11 Nov 2018 05:14:13 GMT
+      Atl-Traceid:
+      - 86165e23803a5f82
       X-Arequestid:
-      - 8e04195f-ec3f-4447-bb67-68b2182fa0a7
+      - 067abea6-8b9c-4a04-ab66-84ce30a18913
       X-Xss-Protection:
       - 1; mode=block
       Transfer-Encoding:
       - chunked
+      Atl-Tcs-Time:
+      - '0'
       X-Ausername:
       - admin
       X-Content-Type-Options:
@@ -45,14 +49,15 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"expand":"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations","id":"10001","self":"<JIRA_URL>rest/api/2/issue/10001","key":"DEV-1","fields":{"issuetype":{"self":"<JIRA_URL>rest/api/2/issuetype/10001","id":"10001","description":"Stories
-        track functionality or features expressed as user goals.","iconUrl":"<JIRA_URL>secure/viewavatar?size=xsmall&avatarId=10315&avatarType=issuetype","name":"Story","subtask":false,"avatarId":10315},"timespent":null,"project":{"self":"<JIRA_URL>rest/api/2/project/10001","id":"10001","key":"DEV","name":"DEV","projectTypeKey":"software","avatarUrls":{"48x48":"<JIRA_URL>secure/projectavatar?avatarId=10324","24x24":"<JIRA_URL>secure/projectavatar?size=small&avatarId=10324","16x16":"<JIRA_URL>secure/projectavatar?size=xsmall&avatarId=10324","32x32":"<JIRA_URL>secure/projectavatar?size=medium&avatarId=10324"}},"fixVersions":[],"aggregatetimespent":null,"resolution":null,"resolutiondate":null,"workratio":-1,"watches":{"self":"<JIRA_URL>rest/api/2/issue/DEV-1/watchers","watchCount":1,"isWatching":true},"lastViewed":null,"created":"2018-06-10T15:49:35.621-0700","customfield_10020":null,"priority":{"self":"<JIRA_URL>rest/api/2/priority/3","iconUrl":"<JIRA_URL>images/icons/priorities/medium.svg","name":"Medium","id":"3"},"labels":[],"customfield_10016":null,"customfield_10019":null,"timeestimate":null,"aggregatetimeoriginalestimate":null,"versions":[],"issuelinks":[],"assignee":null,"updated":"2018-06-10T16:35:54.417-0700","status":{"self":"<JIRA_URL>rest/api/2/status/10003","description":"","iconUrl":"<JIRA_URL>","name":"To
+        track functionality or features expressed as user goals.","iconUrl":"<JIRA_URL>secure/viewavatar?size=xsmall&avatarId=10315&avatarType=issuetype","name":"Story","subtask":false,"avatarId":10315},"timespent":null,"project":{"self":"<JIRA_URL>rest/api/2/project/10001","id":"10001","key":"DEV","name":"DEV","projectTypeKey":"software","avatarUrls":{"48x48":"<JIRA_URL>secure/projectavatar?avatarId=10324","24x24":"<JIRA_URL>secure/projectavatar?size=small&avatarId=10324","16x16":"<JIRA_URL>secure/projectavatar?size=xsmall&avatarId=10324","32x32":"<JIRA_URL>secure/projectavatar?size=medium&avatarId=10324"}},"fixVersions":[],"aggregatetimespent":null,"resolution":null,"resolutiondate":null,"workratio":-1,"watches":{"self":"<JIRA_URL>rest/api/2/issue/DEV-1/watchers","watchCount":1,"isWatching":true},"lastViewed":"2018-11-10T20:47:23.351-0800","created":"2018-06-10T15:49:35.621-0700","customfield_10020":null,"customfield_10021":null,"customfield_10022":null,"priority":{"self":"<JIRA_URL>rest/api/2/priority/3","iconUrl":"<JIRA_URL>images/icons/priorities/medium.svg","name":"Medium","id":"3"},"labels":["label1","label2"],"customfield_10016":null,"customfield_10019":null,"aggregatetimeoriginalestimate":null,"timeestimate":null,"versions":[],"issuelinks":[],"assignee":null,"updated":"2018-11-10T20:47:23.286-0800","status":{"self":"<JIRA_URL>rest/api/2/status/10003","description":"","iconUrl":"<JIRA_URL>","name":"To
         Do","id":"10003","statusCategory":{"self":"<JIRA_URL>rest/api/2/statuscategory/2","id":2,"key":"new","colorName":"blue-gray","name":"To
-        Do"}},"components":[{"self":"<JIRA_URL>rest/api/2/component/10003","id":"10003","name":"ComponentA"},{"self":"<JIRA_URL>rest/api/2/component/10005","id":"10005","name":"ComponentC"}],"timeoriginalestimate":null,"description":null,"customfield_10010":null,"customfield_10011":null,"customfield_10012":null,"customfield_10013":null,"customfield_10014":[],"customfield_10015":null,"timetracking":{},"customfield_10006":null,"customfield_10007":null,"security":null,"customfield_10008":[],"attachment":[],"customfield_10009":"0|i00007:","aggregatetimeestimate":null,"summary":"do
-        the thing ","creator":{"self":"<JIRA_URL>rest/api/2/user?username=admin","name":"admin","key":"admin","accountId":"5ac51680c5459746a4cf0e94","emailAddress":"<JIRA_USER>","avatarUrls":{"48x48":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue","24x24":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue","16x16":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue","32x32":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"},"displayName":"Ben
-        Menesini","active":true,"timeZone":"America/Los_Angeles"},"subtasks":[],"reporter":{"self":"<JIRA_URL>rest/api/2/user?username=admin","name":"admin","key":"admin","accountId":"5ac51680c5459746a4cf0e94","emailAddress":"<JIRA_USER>","avatarUrls":{"48x48":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue","24x24":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue","16x16":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue","32x32":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"},"displayName":"Ben
-        Menesini","active":true,"timeZone":"America/Los_Angeles"},"customfield_10000":"{}","aggregateprogress":{"progress":0,"total":0},"customfield_10001":null,"customfield_10002":null,"environment":null,"duedate":null,"progress":{"progress":0,"total":0},"comment":{"comments":[],"maxResults":0,"total":0,"startAt":0},"votes":{"self":"<JIRA_URL>rest/api/2/issue/DEV-1/votes","votes":0,"hasVoted":false},"worklog":{"startAt":0,"maxResults":20,"total":0,"worklogs":[]}}}'
+        Do"}},"components":[{"self":"<JIRA_URL>rest/api/2/component/10003","id":"10003","name":"ComponentA"},{"self":"<JIRA_URL>rest/api/2/component/10005","id":"10005","name":"ComponentC"}],"timeoriginalestimate":null,"description":null,"customfield_10010":null,"customfield_10011":null,"customfield_10012":null,"customfield_10013":null,"customfield_10014":[],"timetracking":{},"customfield_10015":null,"customfield_10006":null,"customfield_10007":{"hasEpicLinkFieldDependency":false,"showField":false,"nonEditableReason":{"reason":"PLUGIN_LICENSE_ERROR","message":"Portfolio
+        for Jira must be licensed for the Parent Link to be available."}},"security":null,"customfield_10008":null,"customfield_10009":"0|i00007:","aggregatetimeestimate":null,"attachment":[],"summary":"do
+        the thing ","creator":{"self":"<JIRA_URL>rest/api/2/user?accountId=5ac51680c5459746a4cf0e94","name":"admin","key":"admin","accountId":"5ac51680c5459746a4cf0e94","emailAddress":"<JIRA_USER>","avatarUrls":{"48x48":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue","24x24":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue","16x16":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue","32x32":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"},"displayName":"Ben
+        Menesini","active":true,"timeZone":"America/Los_Angeles"},"subtasks":[],"reporter":{"self":"<JIRA_URL>rest/api/2/user?accountId=5ac51680c5459746a4cf0e94","name":"admin","key":"admin","accountId":"5ac51680c5459746a4cf0e94","emailAddress":"<JIRA_USER>","avatarUrls":{"48x48":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue","24x24":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue","16x16":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue","32x32":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"},"displayName":"Ben
+        Menesini","active":true,"timeZone":"America/Los_Angeles"},"customfield_10000":"{}","aggregateprogress":{"progress":0,"total":0},"customfield_10001":null,"customfield_10002":null,"environment":null,"duedate":null,"progress":{"progress":0,"total":0},"votes":{"self":"<JIRA_URL>rest/api/2/issue/DEV-1/votes","votes":0,"hasVoted":false},"comment":{"comments":[],"maxResults":0,"total":0,"startAt":0},"worklog":{"startAt":0,"maxResults":20,"total":0,"worklogs":[]}}}'
     http_version: 
-  recorded_at: Tue, 26 Jun 2018 03:06:43 GMT
+  recorded_at: Sun, 11 Nov 2018 05:14:13 GMT
 - request:
     method: get
     uri: "<JIRA_URL>rest/api/2/issue/ABC-1"
@@ -69,10 +74,10 @@ http_interactions:
   response:
     status:
       code: 200
-      message: OK
+      message: ''
     headers:
       Server:
-      - Atlassian Proxy/0.1.266
+      - Atlassian Proxy/1.13.6.2
       Vary:
       - Accept-Encoding
       Cache-Control:
@@ -82,13 +87,17 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=315360000; includeSubDomains; preload
       Date:
-      - Tue, 26 Jun 2018 03:06:43 GMT
+      - Sun, 11 Nov 2018 05:14:13 GMT
+      Atl-Traceid:
+      - d6a88cf35c0936b0
       X-Arequestid:
-      - 1a6ea911-e0ad-422b-8131-be98b4608302
+      - 000c9435-c894-470d-860d-799dea1641fb
       X-Xss-Protection:
       - 1; mode=block
       Transfer-Encoding:
       - chunked
+      Atl-Tcs-Time:
+      - '1'
       X-Ausername:
       - admin
       X-Content-Type-Options:
@@ -98,14 +107,15 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"expand":"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"<JIRA_URL>rest/api/2/issue/10002","key":"ABC-1","fields":{"issuetype":{"self":"<JIRA_URL>rest/api/2/issuetype/10001","id":"10001","description":"Stories
-        track functionality or features expressed as user goals.","iconUrl":"<JIRA_URL>secure/viewavatar?size=xsmall&avatarId=10315&avatarType=issuetype","name":"Story","subtask":false,"avatarId":10315},"timespent":null,"project":{"self":"<JIRA_URL>rest/api/2/project/10002","id":"10002","key":"ABC","name":"ABC","projectTypeKey":"software","avatarUrls":{"48x48":"<JIRA_URL>secure/projectavatar?avatarId=10324","24x24":"<JIRA_URL>secure/projectavatar?size=small&avatarId=10324","16x16":"<JIRA_URL>secure/projectavatar?size=xsmall&avatarId=10324","32x32":"<JIRA_URL>secure/projectavatar?size=medium&avatarId=10324"}},"fixVersions":[],"aggregatetimespent":null,"resolution":null,"resolutiondate":null,"workratio":-1,"lastViewed":null,"watches":{"self":"<JIRA_URL>rest/api/2/issue/ABC-1/watchers","watchCount":1,"isWatching":true},"created":"2018-06-10T16:06:17.205-0700","customfield_10020":null,"priority":{"self":"<JIRA_URL>rest/api/2/priority/3","iconUrl":"<JIRA_URL>images/icons/priorities/medium.svg","name":"Medium","id":"3"},"labels":[],"customfield_10016":null,"customfield_10019":null,"aggregatetimeoriginalestimate":null,"timeestimate":null,"versions":[],"issuelinks":[],"assignee":null,"updated":"2018-06-10T16:35:27.802-0700","status":{"self":"<JIRA_URL>rest/api/2/status/10003","description":"","iconUrl":"<JIRA_URL>","name":"To
+        track functionality or features expressed as user goals.","iconUrl":"<JIRA_URL>secure/viewavatar?size=xsmall&avatarId=10315&avatarType=issuetype","name":"Story","subtask":false,"avatarId":10315},"timespent":null,"project":{"self":"<JIRA_URL>rest/api/2/project/10002","id":"10002","key":"ABC","name":"ABC","projectTypeKey":"software","avatarUrls":{"48x48":"<JIRA_URL>secure/projectavatar?avatarId=10324","24x24":"<JIRA_URL>secure/projectavatar?size=small&avatarId=10324","16x16":"<JIRA_URL>secure/projectavatar?size=xsmall&avatarId=10324","32x32":"<JIRA_URL>secure/projectavatar?size=medium&avatarId=10324"}},"fixVersions":[],"aggregatetimespent":null,"resolution":null,"resolutiondate":null,"workratio":-1,"watches":{"self":"<JIRA_URL>rest/api/2/issue/ABC-1/watchers","watchCount":1,"isWatching":true},"lastViewed":"2018-11-10T20:47:12.635-0800","created":"2018-06-10T16:06:17.205-0700","customfield_10020":null,"customfield_10021":null,"customfield_10022":null,"priority":{"self":"<JIRA_URL>rest/api/2/priority/3","iconUrl":"<JIRA_URL>images/icons/priorities/medium.svg","name":"Medium","id":"3"},"labels":["label2"],"customfield_10016":null,"customfield_10019":null,"timeestimate":null,"aggregatetimeoriginalestimate":null,"versions":[],"issuelinks":[],"assignee":null,"updated":"2018-11-10T20:47:12.581-0800","status":{"self":"<JIRA_URL>rest/api/2/status/10003","description":"","iconUrl":"<JIRA_URL>","name":"To
         Do","id":"10003","statusCategory":{"self":"<JIRA_URL>rest/api/2/statuscategory/2","id":2,"key":"new","colorName":"blue-gray","name":"To
-        Do"}},"components":[{"self":"<JIRA_URL>rest/api/2/component/10007","id":"10007","name":"ComponentB"}],"timeoriginalestimate":null,"description":null,"customfield_10010":null,"customfield_10011":null,"customfield_10012":null,"customfield_10013":null,"customfield_10014":[],"timetracking":{},"customfield_10015":null,"customfield_10006":null,"security":null,"customfield_10007":null,"customfield_10008":[],"attachment":[],"customfield_10009":"0|i0000f:","aggregatetimeestimate":null,"summary":"do
-        abc thing","creator":{"self":"<JIRA_URL>rest/api/2/user?username=admin","name":"admin","key":"admin","accountId":"5ac51680c5459746a4cf0e94","emailAddress":"<JIRA_USER>","avatarUrls":{"48x48":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue","24x24":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue","16x16":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue","32x32":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"},"displayName":"Ben
-        Menesini","active":true,"timeZone":"America/Los_Angeles"},"subtasks":[],"reporter":{"self":"<JIRA_URL>rest/api/2/user?username=admin","name":"admin","key":"admin","accountId":"5ac51680c5459746a4cf0e94","emailAddress":"<JIRA_USER>","avatarUrls":{"48x48":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue","24x24":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue","16x16":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue","32x32":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"},"displayName":"Ben
-        Menesini","active":true,"timeZone":"America/Los_Angeles"},"aggregateprogress":{"progress":0,"total":0},"customfield_10000":"{}","customfield_10001":null,"customfield_10002":null,"environment":null,"duedate":null,"progress":{"progress":0,"total":0},"votes":{"self":"<JIRA_URL>rest/api/2/issue/ABC-1/votes","votes":0,"hasVoted":false},"comment":{"comments":[],"maxResults":0,"total":0,"startAt":0},"worklog":{"startAt":0,"maxResults":20,"total":0,"worklogs":[]}}}'
+        Do"}},"components":[{"self":"<JIRA_URL>rest/api/2/component/10007","id":"10007","name":"ComponentB"}],"timeoriginalestimate":null,"description":null,"customfield_10010":null,"customfield_10011":null,"customfield_10012":null,"customfield_10013":null,"customfield_10014":[],"customfield_10015":null,"timetracking":{},"customfield_10006":null,"security":null,"customfield_10007":{"hasEpicLinkFieldDependency":false,"showField":false,"nonEditableReason":{"reason":"PLUGIN_LICENSE_ERROR","message":"Portfolio
+        for Jira must be licensed for the Parent Link to be available."}},"customfield_10008":null,"attachment":[],"customfield_10009":"0|i0000f:","aggregatetimeestimate":null,"summary":"do
+        abc thing","creator":{"self":"<JIRA_URL>rest/api/2/user?accountId=5ac51680c5459746a4cf0e94","name":"admin","key":"admin","accountId":"5ac51680c5459746a4cf0e94","emailAddress":"<JIRA_USER>","avatarUrls":{"48x48":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue","24x24":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue","16x16":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue","32x32":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"},"displayName":"Ben
+        Menesini","active":true,"timeZone":"America/Los_Angeles"},"subtasks":[],"reporter":{"self":"<JIRA_URL>rest/api/2/user?accountId=5ac51680c5459746a4cf0e94","name":"admin","key":"admin","accountId":"5ac51680c5459746a4cf0e94","emailAddress":"<JIRA_USER>","avatarUrls":{"48x48":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue","24x24":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue","16x16":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue","32x32":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"},"displayName":"Ben
+        Menesini","active":true,"timeZone":"America/Los_Angeles"},"customfield_10000":"{}","aggregateprogress":{"progress":0,"total":0},"customfield_10001":null,"customfield_10002":null,"environment":null,"duedate":null,"progress":{"progress":0,"total":0},"votes":{"self":"<JIRA_URL>rest/api/2/issue/ABC-1/votes","votes":0,"hasVoted":false},"comment":{"comments":[],"maxResults":0,"total":0,"startAt":0},"worklog":{"startAt":0,"maxResults":20,"total":0,"worklogs":[]}}}'
     http_version: 
-  recorded_at: Tue, 26 Jun 2018 03:06:44 GMT
+  recorded_at: Sun, 11 Nov 2018 05:14:13 GMT
 - request:
     method: get
     uri: "<JIRA_URL>rest/api/2/issue/XYZ-1"
@@ -122,10 +132,10 @@ http_interactions:
   response:
     status:
       code: 200
-      message: OK
+      message: ''
     headers:
       Server:
-      - Atlassian Proxy/0.1.266
+      - Atlassian Proxy/1.13.6.2
       Vary:
       - Accept-Encoding
       Cache-Control:
@@ -135,13 +145,17 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=315360000; includeSubDomains; preload
       Date:
-      - Tue, 26 Jun 2018 03:06:45 GMT
+      - Sun, 11 Nov 2018 05:14:15 GMT
+      Atl-Traceid:
+      - d5cd7573b555be08
       X-Arequestid:
-      - 23d8eebb-d580-4c60-adc6-726dce50f5b5
+      - baf14ea0-099a-4318-b279-592bb5704893
       X-Xss-Protection:
       - 1; mode=block
       Transfer-Encoding:
       - chunked
+      Atl-Tcs-Time:
+      - '0'
       X-Ausername:
       - admin
       X-Content-Type-Options:
@@ -151,12 +165,13 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"expand":"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations","id":"10003","self":"<JIRA_URL>rest/api/2/issue/10003","key":"XYZ-1","fields":{"issuetype":{"self":"<JIRA_URL>rest/api/2/issuetype/10001","id":"10001","description":"Stories
-        track functionality or features expressed as user goals.","iconUrl":"<JIRA_URL>secure/viewavatar?size=xsmall&avatarId=10315&avatarType=issuetype","name":"Story","subtask":false,"avatarId":10315},"timespent":null,"project":{"self":"<JIRA_URL>rest/api/2/project/10003","id":"10003","key":"XYZ","name":"XYZ","projectTypeKey":"software","avatarUrls":{"48x48":"<JIRA_URL>secure/projectavatar?avatarId=10324","24x24":"<JIRA_URL>secure/projectavatar?size=small&avatarId=10324","16x16":"<JIRA_URL>secure/projectavatar?size=xsmall&avatarId=10324","32x32":"<JIRA_URL>secure/projectavatar?size=medium&avatarId=10324"}},"fixVersions":[],"aggregatetimespent":null,"resolution":null,"resolutiondate":null,"workratio":-1,"watches":{"self":"<JIRA_URL>rest/api/2/issue/XYZ-1/watchers","watchCount":1,"isWatching":true},"lastViewed":null,"created":"2018-06-10T16:06:37.918-0700","customfield_10020":null,"priority":{"self":"<JIRA_URL>rest/api/2/priority/3","iconUrl":"<JIRA_URL>images/icons/priorities/medium.svg","name":"Medium","id":"3"},"labels":[],"customfield_10016":null,"customfield_10019":null,"aggregatetimeoriginalestimate":null,"timeestimate":null,"versions":[],"issuelinks":[],"assignee":null,"updated":"2018-06-10T16:36:58.216-0700","status":{"self":"<JIRA_URL>rest/api/2/status/10003","description":"","iconUrl":"<JIRA_URL>","name":"To
+        track functionality or features expressed as user goals.","iconUrl":"<JIRA_URL>secure/viewavatar?size=xsmall&avatarId=10315&avatarType=issuetype","name":"Story","subtask":false,"avatarId":10315},"timespent":null,"project":{"self":"<JIRA_URL>rest/api/2/project/10003","id":"10003","key":"XYZ","name":"XYZ","projectTypeKey":"software","avatarUrls":{"48x48":"<JIRA_URL>secure/projectavatar?avatarId=10324","24x24":"<JIRA_URL>secure/projectavatar?size=small&avatarId=10324","16x16":"<JIRA_URL>secure/projectavatar?size=xsmall&avatarId=10324","32x32":"<JIRA_URL>secure/projectavatar?size=medium&avatarId=10324"}},"fixVersions":[],"aggregatetimespent":null,"resolution":null,"resolutiondate":null,"workratio":-1,"lastViewed":"2018-11-10T20:47:54.485-0800","watches":{"self":"<JIRA_URL>rest/api/2/issue/XYZ-1/watchers","watchCount":1,"isWatching":true},"created":"2018-06-10T16:06:37.918-0700","customfield_10020":null,"customfield_10021":null,"customfield_10022":null,"priority":{"self":"<JIRA_URL>rest/api/2/priority/3","iconUrl":"<JIRA_URL>images/icons/priorities/medium.svg","name":"Medium","id":"3"},"labels":["label1"],"customfield_10016":null,"customfield_10019":null,"aggregatetimeoriginalestimate":null,"timeestimate":null,"versions":[],"issuelinks":[],"assignee":null,"updated":"2018-11-10T20:47:02.317-0800","status":{"self":"<JIRA_URL>rest/api/2/status/10003","description":"","iconUrl":"<JIRA_URL>","name":"To
         Do","id":"10003","statusCategory":{"self":"<JIRA_URL>rest/api/2/statuscategory/2","id":2,"key":"new","colorName":"blue-gray","name":"To
-        Do"}},"components":[{"self":"<JIRA_URL>rest/api/2/component/10011","id":"10011","name":"ComponentC"}],"timeoriginalestimate":null,"description":null,"customfield_10010":null,"customfield_10011":null,"customfield_10012":null,"customfield_10013":null,"customfield_10014":[],"customfield_10015":null,"timetracking":{},"customfield_10006":null,"security":null,"customfield_10007":null,"customfield_10008":[],"customfield_10009":"0|i0000n:","aggregatetimeestimate":null,"attachment":[],"summary":"do
-        xyz thing","creator":{"self":"<JIRA_URL>rest/api/2/user?username=admin","name":"admin","key":"admin","accountId":"5ac51680c5459746a4cf0e94","emailAddress":"<JIRA_USER>","avatarUrls":{"48x48":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue","24x24":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue","16x16":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue","32x32":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"},"displayName":"Ben
-        Menesini","active":true,"timeZone":"America/Los_Angeles"},"subtasks":[],"reporter":{"self":"<JIRA_URL>rest/api/2/user?username=admin","name":"admin","key":"admin","accountId":"5ac51680c5459746a4cf0e94","emailAddress":"<JIRA_USER>","avatarUrls":{"48x48":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue","24x24":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue","16x16":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue","32x32":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"},"displayName":"Ben
-        Menesini","active":true,"timeZone":"America/Los_Angeles"},"customfield_10000":"{}","aggregateprogress":{"progress":0,"total":0},"customfield_10001":null,"customfield_10002":null,"environment":null,"duedate":null,"progress":{"progress":0,"total":0},"comment":{"comments":[],"maxResults":0,"total":0,"startAt":0},"votes":{"self":"<JIRA_URL>rest/api/2/issue/XYZ-1/votes","votes":0,"hasVoted":false},"worklog":{"startAt":0,"maxResults":20,"total":0,"worklogs":[]}}}'
+        Do"}},"components":[{"self":"<JIRA_URL>rest/api/2/component/10011","id":"10011","name":"ComponentC"}],"timeoriginalestimate":null,"description":null,"customfield_10010":null,"customfield_10011":null,"customfield_10012":null,"customfield_10013":null,"customfield_10014":[],"customfield_10015":null,"timetracking":{},"customfield_10006":null,"customfield_10007":{"hasEpicLinkFieldDependency":false,"showField":false,"nonEditableReason":{"reason":"PLUGIN_LICENSE_ERROR","message":"Portfolio
+        for Jira must be licensed for the Parent Link to be available."}},"security":null,"customfield_10008":null,"customfield_10009":"0|i0000n:","aggregatetimeestimate":null,"attachment":[],"summary":"do
+        xyz thing","creator":{"self":"<JIRA_URL>rest/api/2/user?accountId=5ac51680c5459746a4cf0e94","name":"admin","key":"admin","accountId":"5ac51680c5459746a4cf0e94","emailAddress":"<JIRA_USER>","avatarUrls":{"48x48":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue","24x24":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue","16x16":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue","32x32":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"},"displayName":"Ben
+        Menesini","active":true,"timeZone":"America/Los_Angeles"},"subtasks":[],"reporter":{"self":"<JIRA_URL>rest/api/2/user?accountId=5ac51680c5459746a4cf0e94","name":"admin","key":"admin","accountId":"5ac51680c5459746a4cf0e94","emailAddress":"<JIRA_USER>","avatarUrls":{"48x48":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue","24x24":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue","16x16":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue","32x32":"https://avatar-cdn.atlassian.com/ced2c1a305df6b35cd77e99ec6cfe02a?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fced2c1a305df6b35cd77e99ec6cfe02a%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"},"displayName":"Ben
+        Menesini","active":true,"timeZone":"America/Los_Angeles"},"customfield_10000":"{}","aggregateprogress":{"progress":0,"total":0},"customfield_10001":null,"customfield_10002":null,"environment":null,"duedate":null,"progress":{"progress":0,"total":0},"votes":{"self":"<JIRA_URL>rest/api/2/issue/XYZ-1/votes","votes":0,"hasVoted":false},"comment":{"comments":[],"maxResults":0,"total":0,"startAt":0},"worklog":{"startAt":0,"maxResults":20,"total":0,"worklogs":[]}}}'
     http_version: 
-  recorded_at: Tue, 26 Jun 2018 03:06:45 GMT
+  recorded_at: Sun, 11 Nov 2018 05:14:15 GMT
 recorded_with: VCR 4.0.0
