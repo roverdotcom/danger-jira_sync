@@ -61,6 +61,9 @@ module Danger
     # @param issue_prefixes [Array<String>] An array of issue key prefixes;
     #   this is often the project key. These must be present in the title or
     #   body of the Pull Request
+    # @param project [Boolean] Label using the Jira Ticket's Project Key?
+    # @param components [Boolean] Label using the Jira Ticket's Component Names?
+    # @param labels [Boolean] Label using the Jira Ticket's Labels?
     #
     # @return [Array<String>, nil] The list of project & component labels
     #   that were applied or nil if no issue or labels were found

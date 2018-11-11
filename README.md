@@ -44,7 +44,7 @@ Configures the Jira Client with your credentials
 Labels the Pull Request with Jira Project Keys and Component Names
 
 ### `autolabel_pull_request(issue_prefixes, project: true, components: true, labels: true)`
-Labels the Pull Request with Jira Project Keys and Component Names and Labels
+Labels the Pull Request with Jira Project Keys, Component Names, and Labels
 
 **Params**
   - `issue_prefixes [Array<String>]` - An array of issue key prefixes; this is often the project key. These must be present in the title or body of the Pull Request

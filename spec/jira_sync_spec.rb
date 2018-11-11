@@ -23,7 +23,8 @@ JIRA_ENVIRONMENT = {
       issues: [
         {
           key: "DEV-1",
-          components: %w(ComponentA ComponentB)
+          components: %w(ComponentA ComponentB),
+          labels: %w(label1 label2)
         }
       ]
     },
@@ -32,7 +33,8 @@ JIRA_ENVIRONMENT = {
       issues: [
         {
           key: "XYZ-1",
-          components: %w(ComponentC)
+          components: %w(ComponentC),
+          labels: %w(label1)
         }
       ]
     },
@@ -41,7 +43,8 @@ JIRA_ENVIRONMENT = {
       issues: [
         {
           key: "ABC-1",
-          components: %w(ComponentB)
+          components: %w(ComponentB),
+          laels: %(label2)
         }
       ]
     }
@@ -185,6 +188,10 @@ RSpec.describe Danger::DangerJiraSync do
           project_keys.compact.uniq
         end
 
+        def expected_jira_ticket_labels
+          JIRA_ENVIRONMENT[:projects].map { |p| p[:issues].map { |i| i[:labels] } }.flatten.compact.uniq
+        end
+
         def stub_jira_find_issue_response(code:, message:)
           client = plugin.configure(jira_settings)
 
@@ -206,7 +213,7 @@ RSpec.describe Danger::DangerJiraSync do
           stub_jira_find_issue_response(code: 503, message: "Unauthorized")
         end
 
-        it "returns a list of labels that contains Jira component names" do
+        it "returns a list of labels that contains Jira component names by default" do
           stub_github_api_labelling
 
           labels = []
@@ -217,7 +224,7 @@ RSpec.describe Danger::DangerJiraSync do
           expect(labels).to include(*pr_title_related_component_names)
         end
 
-        it "returns a list of labels that contains Jira issue project keys" do
+        it "returns a list of labels that contains Jira issue project keys by default" do
           stub_github_api_labelling
 
           labels = []
@@ -226,6 +233,28 @@ RSpec.describe Danger::DangerJiraSync do
           end
 
           expect(labels).to include(*pr_title_related_project_keys)
+        end
+
+        it "does not return labels by default" do
+          stub_github_api_labelling
+
+          labels = []
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            labels = plugin.autolabel_pull_request(issue_prefixes)
+          end
+
+          expect(labels).not_to include(*expected_jira_ticket_labels)
+        end
+
+        it "returns a list of labels that contains JIRA issue labels" do
+          stub_github_api_labelling
+
+          labels = []
+          VCR.use_cassette(:default_success, record: :new_episodes) do
+            labels = plugin.autolabel_pull_request(issue_prefixes, labels: true)
+          end
+
+          expect(labels).to include(*expected_jira_ticket_labels)
         end
 
         it "creates no warnings in the default case" do
