@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "danger-plugin-api", "~> 1.0"
   spec.add_runtime_dependency "jira-ruby", "~> 1.5.0"
+  spec.add_development_dependency "activesupport", "~> 5.2.4.3"
 
   # General ruby development
   spec.add_development_dependency "bundler", "~> 1.3"
